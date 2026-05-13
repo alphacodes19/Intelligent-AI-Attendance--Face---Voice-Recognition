@@ -11,7 +11,7 @@ git+https://github.com/ageitgey/face_recognition_models.git
 setuptools
 
 supabase
-bcrpyt
+bcrypt
 
 segno
 pillow
