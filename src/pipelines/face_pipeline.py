@@ -73,7 +73,7 @@ def predict_attendance(class_image_np):
          return detected_students, [], len(encodings)
      clf = model_data['clf']
      X_train = model_data['X']
-     y_train = model_data['Y']
+     y_train = model_data['y']
      
      all_students = sorted(list(set(y_train)))
      
