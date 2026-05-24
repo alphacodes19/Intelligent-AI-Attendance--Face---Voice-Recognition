@@ -49,8 +49,9 @@ def style_base_layout():
         }
         h3 {
             font-family: 'Poppins', sans-serif !important;
-            font-weight: 600 !important;
+            font-weight: 700 !important;
             color: #1e293b !important;
+            font-size: 1.6rem !important;
         }
         h4, h5, h6 {
             font-family: 'Poppins', sans-serif !important;
@@ -117,5 +118,31 @@ def style_base_layout():
             background-color: #111 !important;
         }
         button:hover { transform: scale(1.05); }
+
+        /* Fix dark dropdown */
+        [data-baseweb="select"] {
+            background-color: white !important;
+            color: #1e293b !important;
+        }
+        [data-baseweb="select"] * {
+            background-color: white !important;
+            color: #1e293b !important;
+        }
+        [data-baseweb="popover"] * {
+            background-color: white !important;
+            color: #1e293b !important;
+        }
+
+        /* Fix dark dialog/modal */
+        [data-testid="stModal"] > div,
+        [data-baseweb="modal"] {
+            background-color: white !important;
+            color: #1e293b !important;
+        }
+        [data-testid="stModal"] p,
+        [data-testid="stModal"] label,
+        [data-testid="stModal"] span {
+            color: #1e293b !important;
+        }
 
         </style>""", unsafe_allow_html=True)
