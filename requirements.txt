@@ -8,7 +8,7 @@ scikit-learn
 dlib-bin # a Python library that provides machine learning algorithms and tools for data analysis and modeling. It includes a wide range of algorithms for classification, regression, clustering, and dimensionality reduction, as well as tools for model selection and evaluation. It is commonly used in applications such as face recognition, image classification, and natural language processing.
 
 git+https://github.com/ageitgey/face_recognition_models.git
-setuptools
+setuptools==69.5.1
 
 supabase
 bcrypt # a library for hashing passwords securely. It provides functions for hashing and verifying passwords using the bcrypt algorithm, which is designed to be computationally expensive to prevent brute-force attacks. It is commonly used in applications that require user authentication and password management.
