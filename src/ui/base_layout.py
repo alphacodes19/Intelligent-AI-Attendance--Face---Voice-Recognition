@@ -40,12 +40,14 @@ def style_base_layout():
             font-size: 3.5rem !important;
             line-height: 1.1 !important;
             margin-bottom: 0 !important;
+            color: #E0E3FF !important;
         }
         h2 {
             font-family: 'Climate Crisis', sans-serif !important;
             font-size: 2rem !important;
             line-height: 0.9 !important;
             margin-bottom: 0 !important;
+            color: #5865F2 !important;
         }
         h3 {
             font-family: 'Poppins', sans-serif !important;
