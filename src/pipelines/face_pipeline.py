@@ -11,7 +11,7 @@ def load_dlib_models():
      detector = dlib.get_frontal_face_detector()
      
      sp = dlib.shape_predictor(
-         face_recognition_models.pose_predictor_models_location()
+         face_recognition_models.pose_predictor_model_location()
      )
      
      facerec = dlib.face_recognition_model_v1(
@@ -59,7 +59,7 @@ def get_trained_model():
          clf.fit(X,y)
      except ValueError:
          pass
-     return {'clf': clf, 'X':x, "y":y}
+     return {'clf': clf, 'X': X, "y": y}
      
 def train_classifier():
     st.cache_resource.clear()

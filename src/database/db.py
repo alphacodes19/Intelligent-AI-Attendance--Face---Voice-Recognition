@@ -10,7 +10,7 @@ def check_pass(pwd, hashed):
 
 def check_teacher_exists(username):
     # check for unique username, return flase when username is already taken.
-    response = supabase.table("teachers").select("username").eq("username", username).excecute()
+    response = supabase.table("teachers").select("username").eq("username", username).execute()
     return len(response.data) > 0
 
 
@@ -24,7 +24,7 @@ def create_teacher(username, password, name):
     return response.data
 
 def teacher_login(username, password):
-    response = supabase.table("teachers").select("*").eq("username",username).excecute()
+    response = supabase.table("teachers").select("*").eq("username",username).execute()
     if response.data:
         teacher = response.data[0]
         if check_pass(password, teacher["password"]):
@@ -44,7 +44,7 @@ def create_student(new_name, face_embedding = None, voice_embedding = None):
     response = supabase.table("students").insert(data).execute()
     return response.data
 
-def create_subjects(subject_code, name, section, teacher_id):
+def create_subject(subject_code, name, section, teacher_id):
     data = {
         "subject_code": subject_code,
         "name": name,
@@ -53,9 +53,6 @@ def create_subjects(subject_code, name, section, teacher_id):
         }
     response = supabase.table("subjects").insert(data).execute()
     return response.data
-
-def create_subjects(subject_code, name, section, teacher_id):
-    return create_subject(subject_code, name, section, teacher_id)
 
 def get_teacher_subjects(teacher_id):
     response = supabase.table("subjects").select("*, subject_studetns(count), attendance_logs(timestamp)").eq("teacher_id", teacher_id).execute()
