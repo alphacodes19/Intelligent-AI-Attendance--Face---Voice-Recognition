@@ -19,3 +19,4 @@ pillow # a Python Imaging Library (PIL) fork that provides image processing capa
 librosa # a Python library for analyzing and processing audio signals. It provides functions for loading audio files, extracting features, and performing various audio processing tasks. It is commonly used in applications such as music information retrieval, speech recognition, and audio classification.
 soundfile # a Python library for reading and writing audio files. It supports a wide range of audio formats and provides a simple interface for working with audio data. It is commonly used in applications such as audio processing, music analysis, and speech recognition.
 resemblyzer # creates embeddings from audio, which can be used for speaker recognition and verification tasks. It is based on deep learning models and provides a simple interface for generating embeddings from audio files.
+setuptools
