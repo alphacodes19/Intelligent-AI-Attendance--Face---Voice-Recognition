@@ -37,14 +37,12 @@ def style_background_dashboard():
             ,unsafe_allow_html=True)
     
 
-    
 
 def style_base_layout():
-# asdasd
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Climate+Crisis:YEAR@1979&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
                 
          /* Hide Top Bar of streamlit */
@@ -57,10 +55,16 @@ def style_base_layout():
                 padding-top:1.5rem !important;    
             }
 
+            /* Apply Poppins across the entire app UI */
+            html, body, [class*="css"], .stMarkdown, .stText,
+            .stTextInput input, label, p, span, div {
+                font-family: 'Poppins', sans-serif !important;
+            }
+
             h1 {
                 font-family: 'Climate Crisis', sans-serif !important;
                 font-size: 3.5rem !important;
-                line-height:1.1 1important;
+                line-height:1.1 !important;
                 margin-bottom:0rem !important;
             }
                 
@@ -72,10 +76,22 @@ def style_base_layout():
                 margin-bottom:0rem !important;
             }
                 
-            h3, h4, p {
-                font-family: 'Outfit', sans-serif;    
+            h3 {
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 600 !important;
             }
-                
+
+            h4, p, li {
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 400 !important;
+            }
+
+            /* Input and select labels */
+            .stTextInput label, .stSelectbox label,
+            .stFileUploader label, .stCameraInput label {
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 500 !important;
+            }
 
             button{
                 border-radius: 1.5rem !important;
@@ -83,6 +99,8 @@ def style_base_layout():
                 color: white !important;
                 padding: 10px 20px !important;
                 border: none !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 600 !important;
                 transition: transform 0.25s ease-in-out !important;
                 }
 
@@ -92,6 +110,8 @@ def style_base_layout():
                 color: white !important;
                 padding: 10px 20px !important;
                 border: none !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 600 !important;
                 transition: transform 0.25s ease-in-out !important;
                 }
 
@@ -101,6 +121,8 @@ def style_base_layout():
                 color: white !important;
                 padding: 10px 20px !important;
                 border: none !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 500 !important;
                 transition: transform 0.25s ease-in-out !important;
                 }
 
