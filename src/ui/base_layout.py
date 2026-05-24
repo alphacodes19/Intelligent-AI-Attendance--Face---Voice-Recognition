@@ -30,11 +30,9 @@ def style_base_layout():
         @import url('https://fonts.googleapis.com/css2?family=Climate+Crisis:YEAR@1979&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-        /* ── Hide Streamlit chrome ── */
         #MainMenu, footer, header { visibility: hidden; }
         .block-container { padding-top: 1.5rem !important; }
 
-        /* ── Headings ── */
         h1 {
             font-family: 'Climate Crisis', sans-serif !important;
             font-size: 3.5rem !important;
@@ -52,54 +50,58 @@ def style_base_layout():
         h3 {
             font-family: 'Poppins', sans-serif !important;
             font-weight: 600 !important;
+            color: #1e293b !important;
         }
         h4, h5, h6 {
             font-family: 'Poppins', sans-serif !important;
             font-weight: 500 !important;
+            color: #1e293b !important;
         }
-
-        /* ── Body text ── */
         p, li {
             font-family: 'Poppins', sans-serif !important;
             font-weight: 400 !important;
+            color: #1e293b !important;
         }
-
-        /* ── Streamlit-specific text nodes (safe selectors only) ── */
+        [data-testid="stHeadingWithActionElements"] h3,
+        [data-testid="stHeadingWithActionElements"] h2 {
+            color: #1e293b !important;
+        }
         .stMarkdown p,
         .stMarkdown li,
-        .stText,
         [data-testid="stMarkdownContainer"] p {
             font-family: 'Poppins', sans-serif !important;
+            color: #1e293b !important;
         }
-
-        /* ── Form inputs ── */
         .stTextInput input,
         .stTextArea textarea,
         .stSelectbox div[data-baseweb="select"] {
             font-family: 'Poppins', sans-serif !important;
             font-weight: 400 !important;
+            color: #1e293b !important;
         }
-
-        /* ── Form labels ── */
         .stTextInput label,
         .stTextArea label,
         .stSelectbox label,
         .stFileUploader label,
         .stCameraInput label,
-        .stAudioInput label {
+        .stAudioInput label,
+        [data-testid="stWidgetLabel"] p,
+        [data-testid="stWidgetLabel"] label {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 500 !important;
+            color: #1e293b !important;
+        }
+        .stCameraInput p,
+        [data-testid="stCameraInput"] p,
+        [data-testid="stCameraInput"] label {
+            color: #1e293b !important;
             font-family: 'Poppins', sans-serif !important;
             font-weight: 500 !important;
         }
-
-        /* ── Buttons: target the text span only, NOT the icon span ──
-           Streamlit renders: <button><span class="icon">…</span><span class="label">text</span></button>
-           We style the button text via the p inside the label span.          */
         button p {
             font-family: 'Poppins', sans-serif !important;
             font-weight: 600 !important;
         }
-
-        /* ── Button shapes & colours ── */
         button {
             border-radius: 1.5rem !important;
             background-color: #5865F2 !important;
@@ -115,12 +117,5 @@ def style_base_layout():
             background-color: #111 !important;
         }
         button:hover { transform: scale(1.05); }
-
-        /* ── Subheader / widget text ── */
-        [data-testid="stWidgetLabel"] p,
-        [data-testid="stWidgetLabel"] label {
-            font-family: 'Poppins', sans-serif !important;
-            font-weight: 500 !important;
-        }
 
         </style>""", unsafe_allow_html=True)
