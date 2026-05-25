@@ -22,6 +22,8 @@ from src.database.config import supabase
 
 
 from src.components.dialog_voice_attendance import voice_attendance_dialog
+from src.components.dialog_course_students import course_students_dialog
+from src.components.dialog_attendance_detail import attendance_detail_dialog
 def teacher_screen():
 
     style_background_dashboard()
@@ -221,8 +223,13 @@ def teacher_tab_manage_subjects():
             ]
 
             def share_btn(s=sub):
-                if st.button(f"Share Code: {s['name']}", key=f"share_{s['subject_code']}", icon=":material/share:"):
-                    share_subject_dialog(s['name'], s['subject_code'])
+                col_share, col_students = st.columns(2)
+                with col_share:
+                    if st.button(f"Share Code: {s['name']}", key=f"share_{s['subject_code']}", icon=":material/share:", width='stretch'):
+                        share_subject_dialog(s['name'], s['subject_code'])
+                with col_students:
+                    if st.button(f"View Students", key=f"students_{s['subject_code']}", icon=":material/group:", width='stretch', type='tertiary'):
+                        course_students_dialog(s['name'], s['subject_code'], s['subject_id'])
                 st.space()
 
             subject_card(
@@ -240,49 +247,70 @@ def teacher_tab_attendance_records():
     st.header('Attendance Records')
 
     teacher_id = st.session_state.teacher_data['teacher_id']
-
     records = get_attendance_for_teacher(teacher_id)
 
     if not records:
+        st.info("No attendance records yet. Take attendance first.")
         return
-    
-    data = []
 
+    data = []
     for r in records:
         ts = r.get('timestamp')
-
         data.append({
             "ts_group": ts.split(".")[0] if ts else None,
-            "Time": datetime.fromisoformat(ts).strftime("%Y-%m-%d %I:%M %p") if ts else "N'A",
+            "Time": datetime.fromisoformat(ts).strftime("%Y-%m-%d %I:%M %p") if ts else "N/A",
             "Subject": r['subjects']['name'],
-            "Subject Code":r['subjects']['subject_code'],
+            "subject_id": r['subjects']['subject_id'],
+            "Subject Code": r['subjects']['subject_code'],
             "is_present": bool(r.get('is_present', False))
         })
 
-
     df = pd.DataFrame(data)
 
-
-
     summary = (
-        df.groupby(['ts_group', 'Time', 'Subject', 'Subject Code'])
+        df.groupby(['ts_group', 'Time', 'Subject', 'subject_id', 'Subject Code'])
         .agg(
-            Present_Count = ('is_present', 'sum'),
-            Total_Count =('is_present', 'count')
+            Present_Count=('is_present', 'sum'),
+            Total_Count=('is_present', 'count')
         ).reset_index()
-
     )
 
     summary['Attendance Stats'] = (
-        "✅ " + summary['Present_Count'].astype(str) + " /"
+        "✅ " + summary['Present_Count'].astype(str) + " / "
         + summary['Total_Count'].astype(str) + ' Students'
     )
 
-    display_df = ( summary.sort_values(by='ts_group' ,ascending=False)
-                  [['Time', 'Subject', 'Subject Code', 'Attendance Stats']]
-                  )
-    
-    st.dataframe(display_df, width='stretch', hide_index=True)
+    summary = summary.sort_values(by='ts_group', ascending=False)
+
+    # Render each session as a row with a "View Detail" button
+    for _, row in summary.iterrows():
+        col_time, col_sub, col_code, col_stats, col_btn = st.columns(
+            [2, 2, 1.2, 1.8, 1.2], vertical_alignment='center'
+        )
+        with col_time:
+            st.write(row['Time'])
+        with col_sub:
+            st.write(row['Subject'])
+        with col_code:
+            st.write(f"`{row['Subject Code']}`")
+        with col_stats:
+            st.write(row['Attendance Stats'])
+        with col_btn:
+            if st.button(
+                "Details",
+                key=f"detail_{row['ts_group']}_{row['subject_id']}",
+                icon=":material/open_in_new:",
+                type='primary',
+                use_container_width=True
+            ):
+                attendance_detail_dialog(
+                    teacher_id,
+                    row['ts_group'],
+                    row['Subject'],
+                    row['Subject Code'],
+                    row['subject_id']
+                )
+        st.divider()
 
 
 def login_teacher(username, password):

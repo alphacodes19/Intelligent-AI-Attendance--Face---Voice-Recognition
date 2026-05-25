@@ -96,3 +96,43 @@ def get_attendance_for_teacher(teacher_id):
     response = supabase.table('attendance_logs').select("*, subjects!inner(*)").eq('subjects.teacher_id', teacher_id).execute()
     return response.data
 
+
+
+def update_student_voice(student_id, voice_embedding):
+    """Update or set a student's voice embedding."""
+    response = supabase.table('students').update({'voice_embedding': voice_embedding}).eq('student_id', student_id).execute()
+    return response.data
+
+
+def get_all_subjects_with_teachers():
+    """Return all subjects with teacher name and enrolled student count."""
+    response = supabase.table('subjects').select("*, teachers(name), subject_students(count)").execute()
+    subjects = response.data
+    result = []
+    for sub in subjects:
+        enrolled = sub.get('subject_students', [{}])
+        count = enrolled[0].get('count', 0) if enrolled else 0
+        result.append({
+            'subject_id': sub['subject_id'],
+            'name': sub['name'],
+            'subject_code': sub['subject_code'],
+            'section': sub['section'],
+            'teacher_name': sub['teachers']['name'] if sub.get('teachers') else 'Unknown',
+            'total_students': count,
+        })
+    return result
+
+
+def get_subject_enrolled_students(subject_id):
+    """Return list of students enrolled in a given subject."""
+    response = supabase.table('subject_students').select("*, students(*)").eq('subject_id', subject_id).execute()
+    return [node['students'] for node in response.data if node.get('students')]
+
+
+def get_attendance_detail(teacher_id, ts_group, subject_id):
+    """Return per-student attendance rows for a specific session."""
+    response = supabase.table('attendance_logs').select(
+        "*, students(*), subjects!inner(*)"
+    ).eq('subjects.teacher_id', teacher_id).eq('subject_id', subject_id).execute()
+    rows = [r for r in response.data if r.get('timestamp', '').startswith(ts_group)]
+    return rows
