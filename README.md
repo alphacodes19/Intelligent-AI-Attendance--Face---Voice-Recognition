@@ -1,5 +1,8 @@
 # SnapClass — AI Attendance with Face & Voice Recognition
 
+Project Live Link : https://intelligent-ai-attendance--face---voice-recognition-ibbpypntqn.streamlit.app/
+Project Live Landing Page: https://snapclass-landing-page-seven-nu.vercel.app/
+
 Classroom attendance taken from a photo of the room or a recording of students
 speaking, instead of a roll call. Teachers create a subject, share a join code
 or QR, and students enrol themselves and sign in with their face.
