@@ -7,14 +7,13 @@ import io
 def share_subject_dialog(subject_name, subject_code):
     # Dynamically read the actual deployed URL — works on any domain
     try:
-        from streamlit.runtime.scriptrunner import get_script_run_ctx
-        ctx = get_script_run_ctx()
-        # Build URL from actual host
         host = st.context.headers.get("host", "snapclass-main.streamlit.app")
     except Exception:
         host = "snapclass-main.streamlit.app"
 
-    join_url = f"https://{host}/?join-code={subject_code}"
+    # Local dev runs over plain http; a https:// link to localhost is dead.
+    scheme = "http" if host.startswith(("localhost", "127.0.0.1")) else "https"
+    join_url = f"{scheme}://{host}/?join-code={subject_code}"
 
     qr = segno.make(join_url)
     out = io.BytesIO()

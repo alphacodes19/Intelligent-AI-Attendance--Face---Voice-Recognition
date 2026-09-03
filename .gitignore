@@ -1,11 +1,15 @@
 .env
 .vscode
 
-*.pyc #(python runtime cache )
+*.pyc
 .DS_Store
 __pycache__/
 
 venv/
+.venv/
 
-.streamlit/
+# Real secrets stay out of git; the .example file is committed.
+.streamlit/*
+!.streamlit/secrets.toml.example
+
 dist/

@@ -1,4 +1,5 @@
 import streamlit as st
+from html import escape
 from src.database.db import get_subject_enrolled_students
 
 
@@ -21,7 +22,7 @@ def course_students_dialog(subject_name, subject_code, subject_id):
         has_voice = bool(student.get('voice_embedding'))
         voice_badge = "🎙️" if has_voice else "🔇"
         st.markdown(
-            f"{i}. **{student['name']}** &nbsp; "
+            f"{i}. **{escape(str(student['name']))}** &nbsp; "
             f"<span style='font-size:0.8rem; color:#64748b;'>ID: {student['student_id']} "
             f"&nbsp;{voice_badge} {'Voice ✓' if has_voice else 'No voice'}</span>",
             unsafe_allow_html=True

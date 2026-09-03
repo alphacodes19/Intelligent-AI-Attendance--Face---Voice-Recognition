@@ -13,8 +13,14 @@ from datetime import datetime
 def voice_attendance_dialog(selected_subject_id):
     st.write('Record audio of students saying I am present. Then AI will recognize the students')
 
-
-    audio_data = None
+    # Results are cached in session state so they survive the rerun that the
+    # Confirm/Discard buttons trigger. They must be scoped to the subject they
+    # were computed for, otherwise reopening this dialog for a different
+    # subject shows the previous subject's results - and saving them would log
+    # attendance against the wrong subject.
+    cached = st.session_state.get('voice_attendance_results')
+    if cached and cached[0] != selected_subject_id:
+        st.session_state.voice_attendance_results = None
 
     audio_data = st.audio_input("Record classroom audio")
 
@@ -65,10 +71,10 @@ def voice_attendance_dialog(selected_subject_id):
                     'timestamp': current_timestamp,
                     'is_present': bool(is_present)
                 })
-            st.session_state.voice_attendance_results = (pd.DataFrame(results), attendance_to_log)
+            st.session_state.voice_attendance_results = (selected_subject_id, pd.DataFrame(results), attendance_to_log)
 
     if st.session_state.get('voice_attendance_results'):
         st.divider()
-        df_results, logs = st.session_state.voice_attendance_results
+        _subject_id, df_results, logs = st.session_state.voice_attendance_results
         show_attendance_result(df_results, logs)
 

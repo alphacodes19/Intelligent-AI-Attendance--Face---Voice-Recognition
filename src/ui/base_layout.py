@@ -54,7 +54,14 @@ def style_base_layout():
                 font-family: 'Outfit', sans-serif;
             }
 
-            button{
+            /* Streamlit renders a `kind` attribute on every button, including its
+               own chrome: the dialog close X (headerNoPadding), the dataframe
+               and image toolbars (elementToolbar), and icon-only controls.
+               An unscoped `button {}` rule turned all of those into big blue
+               pills - the close X became a blank blue blob and the dataframe
+               toolbar icons floated over the table. Style only real widget
+               buttons and leave the chrome alone. */
+            button:not([kind="header"]):not([kind="headerNoPadding"]):not([kind="elementToolbar"]):not([kind="borderlessIcon"]):not([kind="borderlessIconActive"]):not([kind="minimal"]){
                 border-radius: 1.5rem !important;
                 background-color: #5865F2 !important;
                 color: white !important;
@@ -81,6 +88,8 @@ def style_base_layout():
                 transition: transform 0.25s ease-in-out !important;
                 }
 
-            button:hover{ transform: scale(1.05); }
+            button[kind="primary"]:hover,
+            button[kind="secondary"]:hover,
+            button[kind="tertiary"]:hover{ transform: scale(1.05); }
 
         </style>""", unsafe_allow_html=True)

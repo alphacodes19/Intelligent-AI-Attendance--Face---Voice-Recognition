@@ -54,17 +54,22 @@ def get_trained_model():
             X.append(np.array(embedding))
             y.append(student.get('student_id'))
 
-    if len(X) ==0:
-        return 0
-    
-    clf = SVC(kernel='linear', probability=True, class_weight='balanced')
+    if len(X) == 0:
+        return None
 
-    try:
+    # probability=True is deprecated in scikit-learn 1.9 and unused here
+    # (we never call predict_proba), so it is left off.
+    clf = SVC(kernel='linear', class_weight='balanced')
+
+    # SVC needs at least two classes. With a single registered student we
+    # skip fitting entirely and fall back to the distance check below, rather
+    # than returning a classifier that would raise NotFittedError on predict.
+    fitted = False
+    if len(set(y)) >= 2:
         clf.fit(X, y)
-    except ValueError:
-        pass
+        fitted = True
 
-    return {'clf': clf, 'X':X, "y":y}
+    return {'clf': clf, 'X': X, "y": y, "fitted": fitted}
 
 
 def train_classifier():
@@ -90,8 +95,8 @@ def predict_attendance(class_image_np):
     all_students = sorted(list(set(y_train)))
 
     for encoding in encodings:
-        if len(all_students)>= 2:
-            predicted_id= int(clf.predict([encoding])[0])
+        if model_data.get('fitted'):
+            predicted_id = int(clf.predict([encoding])[0])
         else:
             predicted_id = int(all_students[0])
 

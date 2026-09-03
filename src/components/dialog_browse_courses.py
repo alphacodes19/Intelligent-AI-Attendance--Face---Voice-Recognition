@@ -45,14 +45,14 @@ def browse_courses_dialog():
                     "✅ Enrolled",
                     key=f"browse_join_{sid}",
                     disabled=True,
-                    use_container_width=True,
+                    width='stretch',
                 )
             else:
                 if st.button(
                     "Join",
                     key=f"browse_join_{sid}",
                     type="primary",
-                    use_container_width=True,
+                    width='stretch',
                 ):
                     enroll_student_to_subject(student_id, sid)
                     st.toast(f"Enrolled in {sub['name']}!")

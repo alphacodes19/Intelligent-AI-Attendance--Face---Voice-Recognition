@@ -19,7 +19,7 @@ def get_voice_embedding(audio_bytes):
         embedding = encoder.embed_utterance(wav)
         return embedding.tolist()
     except Exception as e:
-        st.error('Voice recog error')
+        st.error(f'Voice recognition failed: {e}')
         return None
     
 
@@ -72,5 +72,5 @@ def process_bulk_audio(audio_bytes, candidates_dict, threshold=0.72):  # Raised 
 
         return identified_results
     except Exception as e:
-        st.error('Bulk process error')
+        st.error(f'Bulk audio processing failed: {e}')
         return {}

@@ -186,7 +186,7 @@ def teacher_tab_take_attendance():
                             'is_present': bool(is_present)
                         })
 
-                attendance_result_dialog(pd.DataFrame(results), attendance_to_log)
+                    attendance_result_dialog(pd.DataFrame(results), attendance_to_log)
 
     with c3:
         if st.button('Use Voice Attendance', type='primary', width='stretch', icon=':material/mic:'):
@@ -225,10 +225,10 @@ def teacher_tab_manage_subjects():
             def share_btn(s=sub):
                 col_share, col_students = st.columns(2)
                 with col_share:
-                    if st.button(f"Share Code: {s['name']}", key=f"share_{s['subject_code']}", icon=":material/share:", width='stretch'):
+                    if st.button(f"Share Code: {s['name']}", key=f"share_{s['subject_id']}", icon=":material/share:", width='stretch'):
                         share_subject_dialog(s['name'], s['subject_code'])
                 with col_students:
-                    if st.button(f"View Students", key=f"students_{s['subject_code']}", icon=":material/group:", width='stretch', type='tertiary'):
+                    if st.button(f"View Students", key=f"students_{s['subject_id']}", icon=":material/group:", width='stretch', type='tertiary'):
                         course_students_dialog(s['name'], s['subject_code'], s['subject_id'])
                 st.space()
 
@@ -301,7 +301,7 @@ def teacher_tab_attendance_records():
                 key=f"detail_{row['ts_group']}_{row['subject_id']}",
                 icon=":material/open_in_new:",
                 type='primary',
-                use_container_width=True
+                width='stretch'
             ):
                 attendance_detail_dialog(
                     teacher_id,
@@ -379,7 +379,7 @@ def register_teacher(teacher_username, teacher_name, teacher_pass, teacher_pass_
         create_teacher(teacher_username, teacher_pass, teacher_name)
         return True, "Sucessfully Created! Login Now"
     except Exception as e:
-        return False, "Unexpected Error!"
+        return False, f"Registration failed: {e}"
     
 
 def teacher_screen_register():
