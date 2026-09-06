@@ -242,4 +242,4 @@ Known gaps, listed honestly rather than hidden:
 
 ## Credits
 
-Original SnapClass project and design by Sambodh Gupta (Apna College).
+Original SnapClass project and design by Sambodh Gupta.
