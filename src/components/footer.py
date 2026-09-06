@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Change this to whatever you want shown at the bottom of every screen.
-CREDIT = "Created with ❤️ by Arunima Das"
+CREDIT = "Created with ❤️ by Sambodh Gupta"
 
 
 def footer_home():
